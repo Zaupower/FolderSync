@@ -29,7 +29,8 @@ internal class Program
 
         if (sourceFolder.SubFolders != null && replicaFolder.SubFolders != null)
         {
-            p.CheckAndAddModifiedContent(sourceFolder.SubFolders, replicaFolder.SubFolders);            
+            //p.CheckAndAddModifiedContent(sourceFolder.SubFolders, replicaFolder.SubFolders);
+            var result = p.GetFolderPrintDifferences(sourceFolder.SubFolders, replicaFolder.SubFolders);
         }
         //}else
         //if (replicaFolder.SubFolders == null)
