@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FolderSync.CoolWay;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -12,29 +13,25 @@ namespace FolderSync.Helper
         private static Lazy<FileHandler> _instance = new Lazy<FileHandler>(() => new FileHandler());
         public static FileHandler Instance => _instance.Value;
 
-        //public string CalculateMD5(string filename)
-        //{
+        private BluePrintFolder makeBluePrint = BluePrintFolder.Instance;
 
-        //    using var md5 = MD5.Create();
-
-        //    using var stream = File.OpenRead(filename);
-
-        //    var hash = md5.ComputeHash(stream);
-        //    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-        //}
-
-        public string CalculateMD5(string filename)
+        public FolderPrint GetFolderPrint(FolderPrint folder, string path)
         {
+            var replicaFiles = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
+            var relicaSubDirectories = Directory.GetDirectories(path);
+            string folderName = Path.GetFileName(path);
 
-            using (var md5 = MD5.Create())
+
+            if (replicaFiles.Length < 1)
             {
-                using (var stream = System.IO.File.OpenRead(filename))
-                {
-                    var hash = md5.ComputeHash(stream);
-                    return BitConverter.ToString(hash).Replace("-", "");
-                }
+                Console.WriteLine("Empty Folder");
             }
-        }
+            else
+            {
+                folder = makeBluePrint.MakeBluePrint(replicaFiles, folderName, relicaSubDirectories);
+            }
 
+            return folder;
+        }     
     }
 }

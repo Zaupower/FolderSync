@@ -1,34 +1,35 @@
 ﻿
+using FolderSync.CoolWay;
 using FolderSync.Helper;
+using System.Globalization;
 using System.IO;
+using System.Net.WebSockets;
+using System.Security.AccessControl;
+using System.Xml.Serialization;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
+
+        //
+        FolderPrint sourceFolder = new FolderPrint();
+        FolderPrint replicaFolder = new FolderPrint();
+
         FileHandler fh = FileHandler.Instance;
 
-        string sourcePath = @"C:\\Users\\marce\\Documents\\Test\\source\\";
-        string replicaPath = @"C:\\Users\\marce\\Documents\\Test\\replica\\";
+        string sourcePath = $"C:\\Users\\marce\\Documents\\Test\\source\\";
+        string replicaPath = $"C:\\Users\\marce\\Documents\\Test\\replica\\";
 
-        string[] entries = Directory.GetFileSystemEntries(sourcePath, "*", SearchOption.TopDirectoryOnly);
+        //Handle replica
+        sourceFolder = fh.GetFolderPrint(sourceFolder, sourcePath);
+        replicaFolder = fh.GetFolderPrint(replicaFolder, replicaPath);
+       
+        PrintFolderContent p = new PrintFolderContent();
+        p.PrintFolderC(sourceFolder.SubFolders, replicaFolder.SubFolders);
+        var arefileContentEqual = sourceFolder.CompareTo(replicaFolder);
 
-        //print all files in source folder
-        if (entries.Length < 1)
-        {
-            Console.WriteLine("Empty Folder");
-        }
-        else
-        {
-            foreach (var path in entries)
-            {
-
-                Console.WriteLine(fh.CalculateMD5(@path));// full path
-                //Console.WriteLine(Path.GetFileName(path)); // file name
-            }
-        }
-
-        //get checksum of all folder content
-
+        Console.WriteLine(arefileContentEqual); 
+        
     }
 }
