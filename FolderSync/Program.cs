@@ -26,10 +26,26 @@ internal class Program
         replicaFolder = fh.GetFolderPrint(replicaFolder, replicaPath);
        
         PrintFolderContent p = new PrintFolderContent();
-        p.PrintFolderC(sourceFolder.SubFolders, replicaFolder.SubFolders);
+
+        if (sourceFolder.SubFolders != null && replicaFolder.SubFolders != null)
+        {
+            p.PrintFolderC(sourceFolder.SubFolders, replicaFolder.SubFolders);
+            //delete all in replica
+            Console.WriteLine("delete all in replica");
+        }
+        //}else
+        //if (replicaFolder.SubFolders == null)
+        //{
+        //    Console.WriteLine("Copy Everithing from source to replica");
+        //}
+        //else
+        //{
+            
+        //}
+        
         var arefileContentEqual = sourceFolder.CompareTo(replicaFolder);
 
-        Console.WriteLine(arefileContentEqual); 
+        Console.WriteLine("Are file contente equal? "+arefileContentEqual); 
         
     }
 }

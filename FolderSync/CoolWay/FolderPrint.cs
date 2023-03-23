@@ -15,9 +15,7 @@ namespace FolderSync.CoolWay
        public ICollection<string> FileHashes { get; set; }      
 
        public int CompareTo(FolderPrint? other)
-       {
-            
-            //var result = this.FileHashes.Except(other.FileHashes).ToList();
+       {            
             var result = other.FileHashes.SequenceEqual(this.FileHashes);
             return result == true? 0: -1;
        }
