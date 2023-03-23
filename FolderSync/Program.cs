@@ -29,9 +29,7 @@ internal class Program
 
         if (sourceFolder.SubFolders != null && replicaFolder.SubFolders != null)
         {
-            p.PrintFolderC(sourceFolder.SubFolders, replicaFolder.SubFolders);
-            //delete all in replica
-            Console.WriteLine("delete all in replica");
+            p.CheckAndAddModifiedContent(sourceFolder.SubFolders, replicaFolder.SubFolders);            
         }
         //}else
         //if (replicaFolder.SubFolders == null)
