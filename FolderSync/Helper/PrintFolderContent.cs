@@ -1,4 +1,5 @@
-﻿using FolderSync.CoolWay;
+﻿using FolderSync.Classes;
+using FolderSync.Classses;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.AccessControl;
@@ -36,16 +37,16 @@ namespace FolderSync.Helper
         }
 
 
-        public IEnumerable<(FolderPrint folderPrint, bool isCurrent)> GetFolderPrintDifferences(ICollection<FolderPrint> currentSourceSub, ICollection<FolderPrint> replicaSourceSub)
+        public List<FolderDifference> GetFolderPrintDifferences(ICollection<FolderPrint> currentSourceSub, ICollection<FolderPrint> replicaSourceSub)
         {
-            var differences = new List<(FolderPrint folderPrint, bool isCurrent)>();
+            var differences = new List<FolderDifference>();
 
             // Get all objects that are in one collection and not in the other
             var currentOnly = currentSourceSub.Except(replicaSourceSub, new FolderPrintComparer());
             var replicaOnly = replicaSourceSub.Except(currentSourceSub, new FolderPrintComparer());
-
-            differences.AddRange(currentOnly.Select(fp => (fp, true)));
-            differences.AddRange(replicaOnly.Select(fp => (fp, false)));
+            
+            differences.AddRange(currentOnly.Select(fp => new FolderDifference(fp, true)));
+            differences.AddRange(replicaOnly.Select(fp => new FolderDifference(fp, false)));
 
             // Get all objects that are different in both collections
             var common = currentSourceSub.Intersect(replicaSourceSub, new FolderPrintComparer());
@@ -53,12 +54,11 @@ namespace FolderSync.Helper
             {
                 var replicaFolderPrint = replicaSourceSub.First(f => f.FolderPathName == folderPrint.FolderPathName);
                 if (!folderPrint.FileHashes.SequenceEqual(replicaFolderPrint.FileHashes))
-                {
-                    differences.Add((folderPrint, true));
-                    differences.Add((replicaFolderPrint, false));
+                { 
+                    differences.Add(new FolderDifference(folderPrint, true));
+                    differences.Add(new FolderDifference(replicaFolderPrint, false));
                 }
             }
-
             return differences;
         }
 
@@ -80,6 +80,24 @@ namespace FolderSync.Helper
             }
         }
 
-
+        public List<FolderDifference> FindDifferences(ICollection<FolderPrint> currentSourceSub, ICollection<FolderPrint> replicaSourceSub)
+        {
+            var differences = new List<FolderDifference>();
+            foreach (var folder in currentSourceSub)
+            {
+                if (!replicaSourceSub.Contains(folder))
+                {
+                    differences.Add(new FolderDifference(folder, true));
+                }
+            }
+            foreach (var folder in replicaSourceSub)
+            {
+                if (!currentSourceSub.Contains(folder))
+                {
+                    differences.Add(new FolderDifference(folder, false));
+                }
+            }
+            return differences;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿
-using FolderSync.CoolWay;
+using FolderSync.Classes;
+using FolderSync.Classses;
 using FolderSync.Helper;
 using System.Globalization;
 using System.IO;
@@ -27,24 +28,64 @@ internal class Program
        
         PrintFolderContent p = new PrintFolderContent();
 
+
+        List<FolderDifference> differences = new List<FolderDifference>(); 
+       
+        //Handle subfolders
         if (sourceFolder.SubFolders != null && replicaFolder.SubFolders != null)
         {
-            //p.CheckAndAddModifiedContent(sourceFolder.SubFolders, replicaFolder.SubFolders);
-            var result = p.GetFolderPrintDifferences(sourceFolder.SubFolders, replicaFolder.SubFolders);
-        }
-        //}else
-        //if (replicaFolder.SubFolders == null)
-        //{
-        //    Console.WriteLine("Copy Everithing from source to replica");
-        //}
-        //else
-        //{
             
-        //}
-        
-        var arefileContentEqual = sourceFolder.CompareTo(replicaFolder);
+            //differences = p.FindDifferences(sourceFolder.SubFolders, replicaFolder.SubFolders);
+            differences = p.GetFolderPrintDifferences(sourceFolder.SubFolders, replicaFolder.SubFolders);
 
-        Console.WriteLine("Are file contente equal? "+arefileContentEqual); 
+            var toRemoveInReplica = differences.Where(i=> i.IsFromSource == false).ToList();
+            var toAddToReplica = differences.Where(i => i.IsFromSource == true).ToList();
+
+            Console.WriteLine("Folders to remove in replica:");
+            foreach (var toRemove in toRemoveInReplica) 
+            {
+                Console.WriteLine(toRemove.Folder.FolderPathName);
+            }
+
+            Console.WriteLine("Folders to add in replica");
+            foreach (var toAdd in toAddToReplica)
+            {
+                Console.WriteLine(toAdd.Folder.FolderPathName);
+            }
+
+        }
+        else if(sourceFolder.SubFolders == null)
+        {
+            if(replicaFolder.SubFolders != null)
+            {
+                Console.WriteLine("Remove every subfolder from replica");
+            }
+        }else if(sourceFolder.SubFolders != null && replicaFolder.SubFolders == null)
+        {
+            Console.WriteLine("Copy every subfolder from source to replica");
+        }
+
+
+        //Handle files
+        int arefileContentEqual = -2;
+
+        if (sourceFolder.FileHashes != null && replicaFolder.FileHashes != null)
+        {
+            arefileContentEqual = sourceFolder.CompareTo(replicaFolder);
+        }else if(sourceFolder.FileHashes == null)
+        {
+            if(replicaFolder.FileHashes != null)
+            {
+                Console.WriteLine("Remove every file from replica");
+            }
+        }else if(sourceFolder.FileHashes != null && replicaFolder.FileHashes == null)
+        {
+            Console.WriteLine("Copy every file from source to replica");
+        }
+        
+        
+
+       // Console.WriteLine("Are file contente equal? "+arefileContentEqual); 
         
     }
 }
