@@ -21,10 +21,16 @@ namespace FolderSync.Classses
             return result == true ? 0 : -1;
         }
 
+        //TODO:
+        //Resolve this equalizer
+
         public bool Equals(FolderPrint? other)
         {
-            
-            if(other.SubFolders != null && this.SubFolders != null)
+            // ambas podem ter SubFolders null e igual FileHashes
+            // ambas podem ter FileHashes igual e null SubFolders
+            // ambas podem ter SubFolders igual e FileHashes igual
+
+            if (other.SubFolders != null && this.SubFolders != null)
             {
                 if (other.SubFolders.Count != this.SubFolders.Count)
                 {
