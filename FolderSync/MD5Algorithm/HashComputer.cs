@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
 
-namespace FolderSync.Helper
+namespace FolderSync.MD5Algorithm
 {
     public class HashComputer
     {
@@ -13,7 +8,6 @@ namespace FolderSync.Helper
         public static HashComputer Instance => _instance.Value;
         public string CalculateMD5(string filename)
         {
-
             using (var md5 = MD5.Create())
             {
                 using (var stream = File.OpenRead(filename))

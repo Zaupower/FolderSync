@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FolderSync.Classses
 {
-    public class FolderPrint : IComparable<FolderPrint>
+    public class FolderPrint : IComparable<FolderPrint>, IEquatable<FolderPrint>
     {
         public string FolderPathName { get; set; }
         public ICollection<FolderPrint>? SubFolders { get; set; }
@@ -19,6 +19,11 @@ namespace FolderSync.Classses
         {
             var result = other.FileHashes.SequenceEqual(FileHashes);
             return result == true ? 0 : -1;
+        }
+
+        public bool Equals(FolderPrint? other)
+        {
+            return other.FileHashes.SequenceEqual(FileHashes);
         }
     }
 }

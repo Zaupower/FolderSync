@@ -1,11 +1,6 @@
 ﻿using FolderSync.Classses;
 using FolderSync.Helper;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FolderSync.MD5Algorithm;
 
 namespace FolderSync.CoolWay
 {
@@ -14,36 +9,27 @@ namespace FolderSync.CoolWay
         private static Lazy<BluePrintFolder> _instance = new Lazy<BluePrintFolder>(() => new BluePrintFolder());
         public static BluePrintFolder Instance => _instance.Value;
 
-        private HashComputer hc = HashComputer.Instance;
-        private FilePathReader filePathReader = FilePathReader.Instance;
+        private HashComputer _hc = HashComputer.Instance;
+        private FilePathReader _filePathReader = FilePathReader.Instance;
 
         public FolderPrint MakeBluePrint(IEnumerable<string> filesPath, string folderPathName, IEnumerable<string> subDirectoriesPath = null)
         {
-            FolderPrint fp = new FolderPrint();
-            fp.FolderPathName = folderPathName;
-            ICollection<string> hashes = new List<string>();
-            ICollection<FolderPrint> subs = new List<FolderPrint>();
-            
-
-            foreach (var file in filesPath)
+            var fp = new FolderPrint
             {
-                hashes.Add(hc.CalculateMD5(file)) ;
-            }
+                FolderPathName = folderPathName,
+                FileHashes = filesPath.Select(file => _hc.CalculateMD5(file)).ToList()
+            };
 
-            fp.FileHashes = hashes;
-
-            if (subDirectoriesPath.Count() > 0)
+            if (subDirectoriesPath?.Any() == true)
             {
-                foreach (var subDir in subDirectoriesPath)
+                fp.SubFolders = subDirectoriesPath.Select(subDir =>
                 {
+                    var files = _filePathReader.GetAllFiles(subDir);
+                    var subDirectories = _filePathReader.GetAllFolders(subDir);
+                    string folderName = _filePathReader.GetFileName(subDir);
 
-                    var files = filePathReader.GetAllFiles(subDir);
-                    var subDirectories = filePathReader.GetAllFolders(subDir);
-                    string folderName = filePathReader.GetFileName(subDir);
-
-                    subs.Add(MakeBluePrint(files, folderPathName +"\\"+folderName, subDirectories));
-                }
-                fp.SubFolders = subs;
+                    return MakeBluePrint(files, subDir, subDirectories);
+                }).ToList();
             }
             return fp;
         }

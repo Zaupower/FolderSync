@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FolderSync.Helper
+﻿namespace FolderSync.Helper
 {
     internal class FilePathReader
     {
         private static Lazy<FilePathReader> _instance = new Lazy<FilePathReader>(() => new FilePathReader());
         public static FilePathReader Instance => _instance.Value;
-
 
         public string GetFileName(string path)
         {
@@ -33,7 +26,6 @@ namespace FolderSync.Helper
             }
             return folders;
         }
-
         public List<string> GetAllFiles(string path)
         {
             var files = new List<string>();
