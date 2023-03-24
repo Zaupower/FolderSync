@@ -18,13 +18,13 @@ namespace FolderSync.CalculateDiffrences
                     differences.Add(new FolderDifference(folder, true));
                 }
             }
-            foreach (var folder in replicaSourceSub)
-            {
-                if (!currentSourceSub.Contains(folder))
-                {
-                    differences.Add(new FolderDifference(folder, false));
-                }
-            }
+            //foreach (var folder in replicaSourceSub)
+            //{
+            //    if (!currentSourceSub.Contains(folder))
+            //    {
+            //        differences.Add(new FolderDifference(folder, false));
+            //    }
+            //}
             return differences;
         }
     }
