@@ -46,16 +46,16 @@ namespace FolderSync.Helper
             var listOfFilesHashes = _hc.GetDirFileHashes(filesInDir);
             folderPrint.FileHashes = listOfFilesHashes.ToList();
 
-            Console.WriteLine("File Hashes");
-            PrintStringList(listOfFilesHashes.ToList());
+            //Console.WriteLine("File Hashes");
+            //PrintStringList(listOfFilesHashes.ToList());
 
             if (topFolders?.Any() == true)
             {
                 folderPrint.SubFolders = new List<FolderPrint>();
-                Console.WriteLine("Folder Sub Dirs");
+                //Console.WriteLine("Folder Sub Dirs");
                 foreach (var subDirectory in topFolders)
                 {
-                    Console.WriteLine(subDirectory);
+                    //Console.WriteLine(subDirectory);
                     folderPrint.SubFolders.Add( GetFolderPrint2(subDirectory));
                     
                 }

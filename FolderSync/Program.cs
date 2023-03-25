@@ -26,7 +26,7 @@ internal class Program
 
         sourceFolder =  fh.GetFolderPrint2(sourcePath);
         replicaFolder = fh.GetFolderPrint2(replicaPath);
-        fh.GetFolderPrint2(replicaPath);
+
         ////Handle replica
         //sourceFolder = fh.GetFolderPrint(sourceFolder, sourcePath);
         //replicaFolder = fh.GetFolderPrint(replicaFolder, replicaPath);
@@ -36,11 +36,12 @@ internal class Program
 
         List<FolderDifference> differences = new List<FolderDifference>();
 
-        var res2 = p.GetDifferentSubFolders2(sourceFolder, replicaFolder);
+        //var res2 = p.GetDifferentSubFolders2(sourceFolder, replicaFolder);
 
         if (sourceFolder.SubFolders != null && replicaFolder.SubFolders != null)
         {
-            differences = p.FindDifferences(sourceFolder.SubFolders, replicaFolder.SubFolders);
+            differences = p.GetDifferentSubFolders2(sourceFolder, replicaFolder).ToList();
+            //differences = p.FindDifferences(sourceFolder.SubFolders, replicaFolder.SubFolders);
             var toRemoveInReplica = differences.Where(i => i.IsFromSource).ToList();
             var toAddToReplica = differences.Where(i => !i.IsFromSource).ToList();
 

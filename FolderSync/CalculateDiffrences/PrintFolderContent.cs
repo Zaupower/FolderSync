@@ -100,6 +100,14 @@ namespace FolderSync.CalculateDiffrences
         public IEnumerable<FolderDifference> GetDifferentSubFolders2(FolderPrint source, FolderPrint replica)
         {
             var differentSubFolders = new List<FolderDifference>();
+            //Comapre files hashes
+            if (!replica.Equals(source))
+            {
+                var newReplica = new FolderPrint();
+                newReplica.FolderPathName = source.FolderPathName;
+                differentSubFolders.Add(new FolderDifference(newReplica, true));
+                return differentSubFolders;
+            }
 
             if (source.SubFolders == null && replica.SubFolders == null)
                 return differentSubFolders;
@@ -130,10 +138,13 @@ namespace FolderSync.CalculateDiffrences
                         differentSubFolders.AddRange(GetDifferentSubFolders2(source.SubFolders.ToList()[i], replica.SubFolders.ToList()[i]));
                     }
                     
+                }else
+                {
+                    Console.WriteLine("Bad Condition");
                 }
+
             }
-
-
+            
             return differentSubFolders;
         }
     }

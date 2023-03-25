@@ -26,23 +26,23 @@ namespace FolderSync.Classses
 
         public bool Equals(FolderPrint? other)
         {            
-            if(other.SubFolders == null && this.SubFolders == null)
-            {
-                if(other.FileHashes == null && this.FileHashes == null)
-                {
-                    return true;
-                }
-                return other.FileHashes.SequenceEqual(FileHashes);
-            }
-            if (other.SubFolders != null && this.SubFolders != null)
-            {
-                if (other.SubFolders.Count == this.SubFolders.Count)
-                {
-                    return other.FileHashes.SequenceEqual(FileHashes);
-                }
-            }
-
-            return false;
+            //if(other.SubFolders == null && this.SubFolders == null)
+            //{
+            //    if(other.FileHashes == null && this.FileHashes == null)
+            //    {
+            //        return true;
+            //    }
+            //    return other.FileHashes.SequenceEqual(FileHashes);
+            //}
+            //if (other.SubFolders != null && this.SubFolders != null)
+            //{
+            //    if (other.SubFolders.Count == this.SubFolders.Count)
+            //    {
+            //        return other.FileHashes.SequenceEqual(FileHashes);
+            //    }
+            //}
+            return other.FileHashes.SequenceEqual(FileHashes);
+            //return false;
         }
     }
 }
