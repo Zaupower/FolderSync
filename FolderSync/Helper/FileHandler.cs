@@ -1,12 +1,5 @@
 ﻿using FolderSync.Classses;
-using FolderSync.CoolWay;
 using FolderSync.MD5Algorithm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FolderSync.Helper
 {
