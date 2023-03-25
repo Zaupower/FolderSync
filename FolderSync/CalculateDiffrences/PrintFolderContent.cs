@@ -5,6 +5,7 @@ namespace FolderSync.CalculateDiffrences
 {
     public class PrintFolderContent
     {
+
         public IEnumerable<FolderDifference> GetDifferentSubFolders2(FolderPrint source, FolderPrint replica)
         {
             var differentSubFolders = new List<FolderDifference>();

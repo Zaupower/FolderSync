@@ -32,8 +32,7 @@
             var folders = new List<string>();
             try
             {
-                folders.AddRange(Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly));
-                
+                folders.AddRange(Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly));                
             }
             catch (Exception ex)
             {
@@ -46,11 +45,7 @@
             var files = new List<string>();
             try
             {
-                files.AddRange(Directory.GetFiles(path));
-                foreach (var directory in Directory.GetDirectories(path))
-                {
-                    files.AddRange(GetAllFiles(directory));
-                }
+                files.AddRange(Directory.GetFiles(path));               
             }
             catch (Exception ex)
             {
