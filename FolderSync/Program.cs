@@ -34,8 +34,8 @@ internal class Program
         if (sourceFolder.SubFolders != null && replicaFolder.SubFolders != null)
         {
             differences = p.FindDifferences(sourceFolder.SubFolders, replicaFolder.SubFolders);
-            var toRemoveInReplica = differences.Where(i => !i.IsFromSource).ToList();
-            var toAddToReplica = differences.Where(i => i.IsFromSource).ToList();
+            var toRemoveInReplica = differences.Where(i => i.IsFromSource).ToList();
+            var toAddToReplica = differences.Where(i => !i.IsFromSource).ToList();
 
             Console.WriteLine("Folders to remove in replica:");
             foreach (var toRemove in toRemoveInReplica)

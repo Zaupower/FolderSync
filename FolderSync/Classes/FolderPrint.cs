@@ -27,12 +27,18 @@ namespace FolderSync.Classses
         public bool Equals(FolderPrint? other)
         {
             // ambas podem ter SubFolders null e igual FileHashes
-            // ambas podem ter FileHashes igual e null SubFolders
             // ambas podem ter SubFolders igual e FileHashes igual
-
+            if(other.SubFolders == null && this.SubFolders == null)
+            {
+                if(other.FileHashes == null && this.FileHashes == null)
+                {
+                    return true;
+                }
+                return other.FileHashes.SequenceEqual(FileHashes);
+            }
             if (other.SubFolders != null && this.SubFolders != null)
             {
-                if (other.SubFolders.Count != this.SubFolders.Count)
+                if (other.SubFolders.Count == this.SubFolders.Count)
                 {
                     return other.FileHashes.SequenceEqual(FileHashes);
                 }

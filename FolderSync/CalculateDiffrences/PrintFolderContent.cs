@@ -11,20 +11,20 @@ namespace FolderSync.CalculateDiffrences
         public List<FolderDifference> FindDifferences(ICollection<FolderPrint> currentSourceSub, ICollection<FolderPrint> replicaSourceSub)
         {
             var differences = new List<FolderDifference>();
-            foreach (var folder in currentSourceSub)
-            {
-                if (!replicaSourceSub.Contains(folder))
-                {
-                    differences.Add(new FolderDifference(folder, true));
-                }
-            }
-            //foreach (var folder in replicaSourceSub)
+            //foreach (var folder in currentSourceSub)
             //{
-            //    if (!currentSourceSub.Contains(folder))
+            //    if (!replicaSourceSub.Contains(folder))
             //    {
-            //        differences.Add(new FolderDifference(folder, false));
+            //        differences.Add(new FolderDifference(folder, true));
             //    }
             //}
+            foreach (var folder in replicaSourceSub)
+            {
+                if (!currentSourceSub.Contains(folder))
+                {
+                    differences.Add(new FolderDifference(folder, false));
+                }
+            }
             return differences;
         }
     }
