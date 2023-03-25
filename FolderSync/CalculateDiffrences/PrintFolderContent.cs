@@ -48,12 +48,10 @@ namespace FolderSync.CalculateDiffrences
                     }else if (source.SubFolders.Count > replica.SubFolders.Count)
                     {
                         differentSubFolders.Add(new FolderDifference(source, true));
-                        Console.WriteLine("Removed file in replica need to add");
                     }
                     else
                     {
                         differentSubFolders.Add(new FolderDifference(replica, false));
-                        Console.WriteLine("Removed file in source");
                     }
                 }
             }
