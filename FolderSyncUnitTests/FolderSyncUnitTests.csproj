@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="TestFolders\Logs\" />
     <Folder Include="TestFolders\ReplicaTest\" />
     <Folder Include="TestFolders\SourceTest\" />
   </ItemGroup>

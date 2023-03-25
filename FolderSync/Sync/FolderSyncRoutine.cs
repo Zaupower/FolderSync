@@ -16,16 +16,15 @@ namespace FolderSync.Sync
     {
         private FileHandler _fileHandler = FileHandler.Instance;
         private FolderDifferences _printFolderContent = new FolderDifferences();
-        private Logger _logger = Logger.Instance;
+        private Logger _logger;
 
-        public void SyncRoutineStart(string sourcePath, string replicaPath, string logFilePath)
+
+        public void SyncRoutineStart(string sourcePath, string replicaPath, Logger _logger)
         {
             var sourceFolder = _fileHandler.GetFolderPrint(sourcePath);
             var replicaFolder = _fileHandler.GetFolderPrint(replicaPath);            
 
-            List<FolderDifference> differences = new List<FolderDifference>();
-
-            differences = _printFolderContent.GetDifferentSubFolders(sourceFolder, replicaFolder).ToList();
+            var differences = _printFolderContent.GetDifferentSubFolders(sourceFolder, replicaFolder).ToList();
             foreach (FolderDifference difference in differences) 
             {
                 var subDirString = difference.Folder.FolderPathName.Replace(sourcePath, "");
@@ -39,9 +38,11 @@ namespace FolderSync.Sync
 
         public void SyncRoutineStart(string sourcePath, string replicaPath,string logFilePath, int thriggerSeconds)
         {
+            Logger logger = new Logger(logFilePath);
+
             while (true)
             {
-                SyncRoutineStart(sourcePath, replicaPath, logFilePath);                
+                SyncRoutineStart(sourcePath, replicaPath, logger);                
                 Thread.Sleep(TimeSpan.FromSeconds(thriggerSeconds));
             }
             

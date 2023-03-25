@@ -9,7 +9,7 @@ namespace FolderSync.Helper
         public static FileHandler Instance => _instance.Value;
 
         private FilePathReader _filePathReader = FilePathReader.Instance;
-        private HashComputer _hc = HashComputer.Instance;
+        private HashComputer _hashComputer = HashComputer.Instance;
 
         public FolderPrint GetFolderPrint(string path)
         {
@@ -19,7 +19,8 @@ namespace FolderSync.Helper
             var topFolders = _filePathReader.GetAllTopFolders(path);
             var filesInDir = _filePathReader.GetAllFiles(path);
 
-            var listOfFilesHashes = _hc.GetDirFileHashes(filesInDir);
+            var listOfFilesHashes = _hashComputer.GetDirFileHashes(filesInDir);
+
             folderPrint.FileHashes = listOfFilesHashes.ToList();
 
             if (topFolders?.Any() == true)
