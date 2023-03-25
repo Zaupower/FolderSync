@@ -3,10 +3,10 @@ using FolderSync.Classses;
 
 namespace FolderSync.CalculateDiffrences
 {
-    public class PrintFolderContent
+    public class FolderDifferences
     {
 
-        public IEnumerable<FolderDifference> GetDifferentSubFolders2(FolderPrint source, FolderPrint replica)
+        public IEnumerable<FolderDifference> GetDifferentSubFolders(FolderPrint source, FolderPrint replica)
         {
             var differentSubFolders = new List<FolderDifference>();
             //Comapre files hashes
@@ -41,7 +41,7 @@ namespace FolderSync.CalculateDiffrences
                 {
                     for(int i = 0; i < source.SubFolders.Count; i++)
                     {
-                        differentSubFolders.AddRange(GetDifferentSubFolders2(source.SubFolders.ToList()[i], replica.SubFolders.ToList()[i]));
+                        differentSubFolders.AddRange(GetDifferentSubFolders(source.SubFolders.ToList()[i], replica.SubFolders.ToList()[i]));
                     }
                     
                 }else

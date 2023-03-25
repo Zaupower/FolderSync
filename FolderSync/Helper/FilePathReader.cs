@@ -26,7 +26,6 @@
             }
             return folders;
         }
-
         public List<string> GetAllTopFolders(string path)
         {
             var folders = new List<string>();
