@@ -26,6 +26,21 @@
             }
             return folders;
         }
+
+        public List<string> GetAllTopFolders(string path)
+        {
+            var folders = new List<string>();
+            try
+            {
+                folders.AddRange(Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly));
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return folders;
+        }
         public List<string> GetAllFiles(string path)
         {
             var files = new List<string>();

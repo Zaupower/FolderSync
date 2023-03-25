@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using FolderSync.Helper;
+using System.Security.Cryptography;
 
 namespace FolderSync.MD5Algorithm
 {
@@ -16,6 +17,16 @@ namespace FolderSync.MD5Algorithm
                     return BitConverter.ToString(hash).Replace("-", "");
                 }
             }
+        }
+        public IEnumerable<string> GetDirFileHashes(IEnumerable<string> files)
+        {
+            List<string> hashes = new List<string>();
+
+            foreach (var file in files)
+            {
+                hashes.Add(CalculateMD5(file));
+            }
+            return hashes;
         }
     }
 }

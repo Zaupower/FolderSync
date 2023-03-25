@@ -23,13 +23,20 @@ internal class Program
         string sourcePath = $"C:\\Users\\marce\\Documents\\Test\\source\\";
         string replicaPath = $"C:\\Users\\marce\\Documents\\Test\\replica\\";
 
-        //Handle replica
-        sourceFolder = fh.GetFolderPrint(sourceFolder, sourcePath);
-        replicaFolder = fh.GetFolderPrint(replicaFolder, replicaPath);
-       
+
+        sourceFolder =  fh.GetFolderPrint2(sourcePath);
+        replicaFolder = fh.GetFolderPrint2(replicaPath);
+        fh.GetFolderPrint2(replicaPath);
+        ////Handle replica
+        //sourceFolder = fh.GetFolderPrint(sourceFolder, sourcePath);
+        //replicaFolder = fh.GetFolderPrint(replicaFolder, replicaPath);
+
+
         PrintFolderContent p = new PrintFolderContent();
 
         List<FolderDifference> differences = new List<FolderDifference>();
+
+        var res2 = p.GetDifferentSubFolders2(sourceFolder, replicaFolder);
 
         if (sourceFolder.SubFolders != null && replicaFolder.SubFolders != null)
         {

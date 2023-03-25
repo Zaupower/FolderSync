@@ -1,6 +1,9 @@
 ﻿using FolderSync.Classses;
 using FolderSync.Helper;
 using FolderSync.MD5Algorithm;
+using System.IO;
+using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 
 namespace FolderSync.CoolWay
 {
@@ -12,7 +15,7 @@ namespace FolderSync.CoolWay
         private HashComputer _hc = HashComputer.Instance;
         private FilePathReader _filePathReader = FilePathReader.Instance;
 
-        public FolderPrint MakeBluePrint(IEnumerable<string> filesPath, string folderPathName, IEnumerable<string> subDirectoriesPath = null)
+        public FolderPrint MakeBluePrint(IEnumerable<string> filesPath, string folderPathName, IEnumerable<string> subDirectoriesPath)
         {
             var fp = new FolderPrint
             {
@@ -22,16 +25,38 @@ namespace FolderSync.CoolWay
 
             if (subDirectoriesPath?.Any() == true)
             {
-                fp.SubFolders = subDirectoriesPath.Select(subDir =>
-                {
-                    var files = _filePathReader.GetAllFiles(subDir);
-                    var subDirectories = _filePathReader.GetAllFolders(subDir);
-                    string folderName = _filePathReader.GetFileName(subDir);
+                
+                List<TestProp> subs = new List<TestProp>();
 
-                    return MakeBluePrint(files, subDir, subDirectories);
-                }).ToList();
+                foreach (var subDirectory in subDirectoriesPath) 
+                {
+
+                    TestProp tp = new TestProp
+                    {
+                        //filesMD5 = GetDirFileHashes(subDirectory),
+                        PathName = folderPathName,
+                    };
+                }
+
+
+                //fp.SubFolders = subDirectoriesPath.Select(subDir =>
+                //{
+                //    var files = _filePathReader.GetAllFiles(subDir);
+                //    var subDirectories = _filePathReader.GetAllFolders(subDir);
+                //    string folderName = _filePathReader.GetFileName(subDir);
+
+                //    return MakeBluePrint(files, subDir, subDirectories);
+                //}).ToList();
+
+
+                //var files = _filePathReader.GetAllFiles(folderPathName);
+                //var subDirectories = _filePathReader.GetAllFolders(folderPathName);
+                //string folderName = _filePathReader.GetFileName(folderPathName);
+
+                //return MakeBluePrint(files, folderPathName, subDirectories);
             }
             return fp;
         }
+
     }
 }
