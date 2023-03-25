@@ -27,11 +27,6 @@ internal class Program
         sourceFolder =  fh.GetFolderPrint2(sourcePath);
         replicaFolder = fh.GetFolderPrint2(replicaPath);
 
-        ////Handle replica
-        //sourceFolder = fh.GetFolderPrint(sourceFolder, sourcePath);
-        //replicaFolder = fh.GetFolderPrint(replicaFolder, replicaPath);
-
-
         PrintFolderContent p = new PrintFolderContent();
 
         List<FolderDifference> differences = new List<FolderDifference>();
