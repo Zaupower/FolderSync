@@ -11,8 +11,9 @@ namespace FolderSyncUnitTests.PositiveTesnt
         }
 
         [Test]
-        public void Test1()
+        public void Sync_EmptySourceAndEmptyReplica()
         {
+
             Assert.Pass();
         }
     }

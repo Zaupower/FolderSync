@@ -2,6 +2,7 @@
 using FolderSync.Classes;
 using FolderSync.Extensions;
 using FolderSync.Helper;
+using FolderSync.LoggerC;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,11 +16,12 @@ namespace FolderSync.Sync
     {
         private FileHandler _fileHandler = FileHandler.Instance;
         private FolderDifferences _printFolderContent = new FolderDifferences();
+        private Logger _logger = Logger.Instance;
 
-        public void SyncRoutineStart(string sourcePath, string replicaPath)
+        public void SyncRoutineStart(string sourcePath, string replicaPath, string logFilePath)
         {
-            var sourceFolder = _fileHandler.GetFolderPrint2(sourcePath);
-            var replicaFolder = _fileHandler.GetFolderPrint2(replicaPath);            
+            var sourceFolder = _fileHandler.GetFolderPrint(sourcePath);
+            var replicaFolder = _fileHandler.GetFolderPrint(replicaPath);            
 
             List<FolderDifference> differences = new List<FolderDifference>();
 
@@ -35,12 +37,12 @@ namespace FolderSync.Sync
             }
         }
 
-        public void SyncRoutineStart(string sourcePath, string replicaPath, int thriggerSeconds)
+        public void SyncRoutineStart(string sourcePath, string replicaPath,string logFilePath, int thriggerSeconds)
         {
             while (true)
             {
-                SyncRoutineStart(sourcePath, replicaPath);                
-                Thread.Sleep(thriggerSeconds);
+                SyncRoutineStart(sourcePath, replicaPath, logFilePath);                
+                Thread.Sleep(TimeSpan.FromSeconds(thriggerSeconds));
             }
             
         }       

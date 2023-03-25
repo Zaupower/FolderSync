@@ -11,7 +11,7 @@ namespace FolderSync.Helper
         private FilePathReader _filePathReader = FilePathReader.Instance;
         private HashComputer _hc = HashComputer.Instance;
 
-        public FolderPrint GetFolderPrint2(string path)
+        public FolderPrint GetFolderPrint(string path)
         {
             FolderPrint folderPrint = new FolderPrint();
             folderPrint.FolderPathName = path;
@@ -27,7 +27,7 @@ namespace FolderSync.Helper
                 folderPrint.SubFolders = new List<FolderPrint>();
                 foreach (var subDirectory in topFolders)
                 {
-                    folderPrint.SubFolders.Add( GetFolderPrint2(subDirectory));                    
+                    folderPrint.SubFolders.Add( GetFolderPrint(subDirectory));                    
                 }
 
             }
