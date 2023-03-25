@@ -16,10 +16,8 @@ namespace FolderSync.Sync
     {
         private FileHandler _fileHandler = FileHandler.Instance;
         private FolderDifferences _printFolderContent = new FolderDifferences();
-        private Logger _logger;
 
-
-        public void SyncRoutineStart(string sourcePath, string replicaPath, Logger _logger)
+        public void SyncRoutineStart(string sourcePath, string replicaPath, Logger logger)
         {
             var sourceFolder = _fileHandler.GetFolderPrint(sourcePath);
             var replicaFolder = _fileHandler.GetFolderPrint(replicaPath);            
@@ -27,12 +25,31 @@ namespace FolderSync.Sync
             var differences = _printFolderContent.GetDifferentSubFolders(sourceFolder, replicaFolder).ToList();
             foreach (FolderDifference difference in differences) 
             {
+                string appendToLog = "";
+
                 var subDirString = difference.Folder.FolderPathName.Replace(sourcePath, "");
                 var sourceDir = new DirectoryInfo(sourcePath+subDirString);
-                //var replicaDir = new DirectoryInfo(replicaPath);
 
-                sourceDir.DeepCopy(replicaPath + subDirString);
-                Console.WriteLine("I will update folder: "+ replicaPath+ subDirString);
+                switch (difference.IsFromSource)
+                {
+                    case true:
+                        subDirString = difference.Folder.FolderPathName.Replace(sourcePath, "");
+                        sourceDir = new DirectoryInfo(sourcePath + subDirString);
+                        sourceDir.DeepCopy(replicaPath + subDirString);
+                        appendToLog = DateTime.UtcNow + " :: adding: " + replicaPath + subDirString + " in replica folder";
+                        break;
+                    case false:
+                         subDirString = difference.Folder.FolderPathName.Replace(replicaPath, "");
+                         sourceDir = new DirectoryInfo(replicaPath + subDirString);
+                        sourceDir.DeleteDirectory(replicaPath + subDirString);
+                        appendToLog = DateTime.UtcNow+" :: deleting: " + replicaPath + subDirString+ " in replica folder" ;
+                        break;
+                }
+                
+                //Log changes
+                //appendToLog = "I will update folder: " + replicaPath + subDirString;
+                logger.Log(appendToLog);
+                Console.WriteLine(appendToLog);
             }
         }
 

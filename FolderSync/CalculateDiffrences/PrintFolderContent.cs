@@ -12,7 +12,7 @@ namespace FolderSync.CalculateDiffrences
             //Comapre files hashes
             if (!replica.Equals(source))
             {
-                differentSubFolders.Add(new FolderDifference(source, true));
+                differentSubFolders.Add(new FolderDifference(replica, false));
                 return differentSubFolders;
             }
 
@@ -37,18 +37,25 @@ namespace FolderSync.CalculateDiffrences
                 var sourceExcept = source.SubFolders.Except(replica.SubFolders);
                 var replicaExcept = replica.SubFolders.Except(source.SubFolders);
 
-                if (sourceExcept != null && replicaExcept != null && source.SubFolders.Count == replica.SubFolders.Count)
+                if (sourceExcept != null && replicaExcept != null)
                 {
-                    for(int i = 0; i < source.SubFolders.Count; i++)
+                    if (source.SubFolders.Count == replica.SubFolders.Count)
                     {
-                        differentSubFolders.AddRange(GetDifferentSubFolders(source.SubFolders.ToList()[i], replica.SubFolders.ToList()[i]));
+                        for (int i = 0; i < source.SubFolders.Count; i++)
+                        {
+                            differentSubFolders.AddRange(GetDifferentSubFolders(source.SubFolders.ToList()[i], replica.SubFolders.ToList()[i]));
+                        }
+                    }else if (source.SubFolders.Count > replica.SubFolders.Count)
+                    {
+                        differentSubFolders.Add(new FolderDifference(source, true));
+                        Console.WriteLine("Removed file in replica need to add");
                     }
-                    
-                }else
-                {
-                    Console.WriteLine("Bad Condition found, if this condition was printed an unhadled case is happenning!");
+                    else
+                    {
+                        differentSubFolders.Add(new FolderDifference(replica, false));
+                        Console.WriteLine("Removed file in source");
+                    }
                 }
-
             }
             
             return differentSubFolders;

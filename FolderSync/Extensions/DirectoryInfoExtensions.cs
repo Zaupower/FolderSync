@@ -21,5 +21,22 @@ namespace FolderSync.Extensions
                 File.Copy(newPath, newPath.Replace(directory.FullName, destinationDir), true);
             }
         }
+        public static void DeleteDirectory(this DirectoryInfo directoryInfo, string destination)
+        {
+            if (directoryInfo.Exists)
+            {
+                foreach (var file in directoryInfo.GetFiles())
+                {
+                    file.Delete();
+                }
+
+                foreach (var subDirectory in directoryInfo.GetDirectories())
+                {
+                    subDirectory.Delete(true);
+                }
+
+                directoryInfo.Delete();
+            }
+        }
     }
 }

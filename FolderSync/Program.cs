@@ -16,9 +16,9 @@ internal class Program
     {
         string sourcePath = $"C:\\Users\\marce\\Documents\\Test\\source\\";
         string replicaPath = $"C:\\Users\\marce\\Documents\\Test\\replica\\";
-
+        string logsPath = "C:\\Users\\marce\\Documents\\Test\\Logs\\logger.txt";
         FolderSyncRoutine syncRoutine = new FolderSyncRoutine();
-        syncRoutine.SyncRoutineStart(sourcePath, replicaPath);
+        syncRoutine.SyncRoutineStart(sourcePath, replicaPath, logsPath, 4 );
 
             
     }
