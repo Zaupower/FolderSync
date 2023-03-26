@@ -35,7 +35,7 @@ namespace FolderSync.Extensions
                     subDirectory.Delete(true);
                 }
 
-                directoryInfo.Delete();
+                //directoryInfo.Delete();
             }
         }
     }

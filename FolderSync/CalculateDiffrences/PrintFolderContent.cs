@@ -10,9 +10,11 @@ namespace FolderSync.CalculateDiffrences
         {
             var differentSubFolders = new List<FolderDifference>();
             //Comapre files hashes
-            if (!replica.Equals(source))
+            int comparer = source.CompareTo(replica);
+            if (comparer != 0)
             {
-                differentSubFolders.Add(new FolderDifference(replica, false));
+
+                differentSubFolders.Add(new FolderDifference(comparer == -1 ? replica:source, comparer==-1?false: true));
                 return differentSubFolders;
             }
 
@@ -23,7 +25,7 @@ namespace FolderSync.CalculateDiffrences
                 
             if (source.SubFolders == null && replica.SubFolders != null)
             {
-                differentSubFolders.Add(new FolderDifference(source, false));
+                differentSubFolders.Add(new FolderDifference(replica, false));
                 return differentSubFolders;
             }
 

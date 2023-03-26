@@ -18,7 +18,11 @@ namespace FolderSync.Classses
         public int CompareTo(FolderPrint? other)
         {
             var result = other.FileHashes.SequenceEqual(FileHashes);
-            return result == true ? 0 : -1;
+            if (!result) 
+            {
+                return this.FileHashes.Count > other.FileHashes.Count == true? 1: -1;
+            }
+            return 0;
         }
 
         public bool Equals(FolderPrint? other)
