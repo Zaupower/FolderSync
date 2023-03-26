@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -17,9 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Scenarios\LoggerTests\" />
+    <Folder Include="Scenarios\NegativeTests\" />
     <Folder Include="TestFolders\Logs\" />
     <Folder Include="TestFolders\ReplicaTest\" />
     <Folder Include="TestFolders\SourceTest\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FolderSync\FolderSync.csproj" />
   </ItemGroup>
 
 </Project>

@@ -14,11 +14,12 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        string sourcePath = $"C:\\Users\\marce\\Documents\\Test\\source\\";
-        string replicaPath = $"C:\\Users\\marce\\Documents\\Test\\replica\\";
-        string logsPath = "C:\\Users\\marce\\Documents\\Test\\Logs\\logger.txt";
+        //string sourcePath = $"C:\\Users\\marce\\Documents\\Test\\source\\";
+        //string replicaPath = $"C:\\Users\\marce\\Documents\\Test\\replica\\";
+        //string logsPath = "C:\\Users\\marce\\Documents\\Test\\Logs\\logger.txt";
+
         FolderSyncRoutine syncRoutine = new FolderSyncRoutine();
-        syncRoutine.SyncRoutineStart(sourcePath, replicaPath, logsPath, 4 );
+        syncRoutine.SyncRoutineStart(args[0], args[1], args[2], int.Parse(args[3]) );
 
             
     }

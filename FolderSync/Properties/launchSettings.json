@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FolderSync": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\marce\\Documents\\Test\\source C:\\Users\\marce\\Documents\\Test\\replica C:\\Users\\marce\\Documents\\Test\\Logs\\logs.txt 4"
+    }
+  }
+}

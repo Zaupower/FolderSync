@@ -23,6 +23,7 @@ namespace FolderSync.Sync
             var replicaFolder = _fileHandler.GetFolderPrint(replicaPath);            
 
             var differences = _printFolderContent.GetDifferentSubFolders(sourceFolder, replicaFolder).ToList();
+
             foreach (FolderDifference difference in differences) 
             {
                 string appendToLog = "";
@@ -44,10 +45,7 @@ namespace FolderSync.Sync
                         sourceDir.DeleteDirectory(replicaPath + subDirString);
                         appendToLog = DateTime.UtcNow+" :: deleting: " + replicaPath + subDirString+ " in replica folder" ;
                         break;
-                }
-                
-                //Log changes
-                //appendToLog = "I will update folder: " + replicaPath + subDirString;
+                }                
                 logger.Log(appendToLog);
                 Console.WriteLine(appendToLog);
             }
