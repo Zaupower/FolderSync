@@ -9,13 +9,19 @@ namespace FolderSync.MD5Algorithm
         public static HashComputer Instance => _instance.Value;
         public string CalculateMD5(string filename)
         {
-            using (var md5 = MD5.Create())
-            {
-                using (var stream = File.OpenRead(filename))
+            try { 
+                using (var md5 = MD5.Create())
                 {
-                    var hash = md5.ComputeHash(stream);
-                    return BitConverter.ToString(hash).Replace("-", "");
+                    using (var stream = File.OpenRead(filename))
+                    {
+                        var hash = md5.ComputeHash(stream);
+                        return BitConverter.ToString(hash).Replace("-", "");
+                    }
                 }
+            }catch (IOException e) 
+            {
+               Console.WriteLine(e.Message);    
+                return ""; 
             }
         }
         public IEnumerable<string> GetDirFileHashes(IEnumerable<string> files)
