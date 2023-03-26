@@ -40,8 +40,8 @@ namespace FolderSync.Sync
                         appendToLog = DateTime.UtcNow + " :: adding: " + replicaPath + subDirString + " in replica folder";
                         break;
                     case false:
-                         subDirString = difference.Folder.FolderPathName.Replace(replicaPath, "");
-                         sourceDir = new DirectoryInfo(replicaPath + subDirString);
+                        subDirString = difference.Folder.FolderPathName.Replace(replicaPath, "");
+                        sourceDir = new DirectoryInfo(replicaPath + subDirString);
                         sourceDir.DeleteDirectory(replicaPath + subDirString);
                         appendToLog = DateTime.UtcNow+" :: deleting: " + replicaPath + subDirString+ " in replica folder" ;
                         break;

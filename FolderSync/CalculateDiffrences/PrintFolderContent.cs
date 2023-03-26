@@ -55,8 +55,7 @@ namespace FolderSync.CalculateDiffrences
                         differentSubFolders.Add(new FolderDifference(replica, false));
                     }
                 }
-            }
-            
+            }            
             return differentSubFolders;
         }
     }
