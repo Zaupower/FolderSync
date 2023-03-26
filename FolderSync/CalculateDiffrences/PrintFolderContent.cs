@@ -13,7 +13,6 @@ namespace FolderSync.CalculateDiffrences
             int comparer = source.CompareTo(replica);
             if (comparer != 0)
             {
-
                 differentSubFolders.Add(new FolderDifference(comparer == -1 ? replica:source, comparer==-1?false: true));
                 return differentSubFolders;
             }
